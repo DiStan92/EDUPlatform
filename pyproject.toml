@@ -2,7 +2,7 @@
 name = "eduplatform"
 version = "0.1.0"
 description = ""
-authors = ["Nikita <nikitapt63@gmail.com>", "Dima <dimastantsel@gmail.com>"]
+authors = ["Nikita <nikitapt63@gmail.com>", "Dima <dimastantsel@gmail.com>", "Kate <katherinameliuk1@gmail.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
