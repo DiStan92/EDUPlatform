@@ -1,8 +1,6 @@
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.contrib.auth.models import PermissionsMixin
 from django.db import models
-
-# from django.db.models import CASCADE
 from django.utils.translation import gettext_lazy as _
 
 from .managers import CustomUserManager
@@ -38,9 +36,8 @@ class User(AbstractBaseUser, PermissionsMixin):
 
 
 class Teacher(models.Model):
-    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
-    experiense = models.IntegerField()
-    raiting = models.DecimalField(max_digits=4, decimal_places=2)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    experience = models.IntegerField()
 
     def __str__(self):
         return f"{self.pk} - {self.user}"
@@ -51,9 +48,9 @@ class Teacher(models.Model):
 
 
 class Student(models.Model):
-    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     age = models.IntegerField()
-    raiting = models.DecimalField(max_digits=4, decimal_places=2)
+    rating = models.DecimalField(max_digits=4, decimal_places=2)
 
     def __str__(self):
         return f"{self.pk} - {self.user}"
