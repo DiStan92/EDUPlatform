@@ -7,12 +7,12 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ("users", "0005_create_topic_model"),
+        ("users", "0006_create_article_model"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name="Article",
+            name="Test",
             fields=[
                 (
                     "id",
@@ -24,7 +24,8 @@ class Migration(migrations.Migration):
                     ),
                 ),
                 ("title", models.CharField(max_length=150)),
-                ("content", models.TextField()),
+                ("description", models.CharField(max_length=150)),
+                ("is_open", models.BooleanField(default=False)),
                 (
                     "teacher",
                     models.ForeignKey(
@@ -43,8 +44,8 @@ class Migration(migrations.Migration):
                 ),
             ],
             options={
-                "verbose_name": "article",
-                "verbose_name_plural": "articles",
+                "verbose_name": "test",
+                "verbose_name_plural": "tests",
             },
         ),
     ]
