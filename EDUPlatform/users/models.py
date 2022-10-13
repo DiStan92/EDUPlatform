@@ -1,8 +1,12 @@
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.contrib.auth.models import PermissionsMixin
 from django.db import models
+
+# from django.db.models import CASCADE
 from django.utils.translation import gettext_lazy as _
+
 from .managers import CustomUserManager
+
 
 class User(AbstractBaseUser, PermissionsMixin):
 
@@ -17,10 +21,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_active = models.BooleanField(
         _("active"),
         default=True,
-        help_text=_(
-            "Designates whether this user should be treated as active. "
-            "Unselect this instead of deleting accounts."
-        ),
+        help_text=_("Designates whether this user should be treated as active. " "Unselect this instead of deleting accounts."),
     )
 
     objects = CustomUserManager()
@@ -29,31 +30,34 @@ class User(AbstractBaseUser, PermissionsMixin):
     REQUIRED_FIELDS = ["first_name", "last_name"]
 
     def __str__(self):
-        return f'{self.pk} - {self.email}'
+        return f"{self.pk} - {self.email}"
+
     class Meta:
         verbose_name = _("user")
         verbose_name_plural = _("users")
 
 
-class Teacher(User):
+class Teacher(models.Model):
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     experiense = models.IntegerField()
+    raiting = models.DecimalField(max_digits=4, decimal_places=2)
 
     def __str__(self):
-        return f'{self.pk} - {self.first_name} {self.last_name}'
+        return f"{self.pk} - {self.user}"
 
     class Meta:
-        verbose_name = 'teacher'
-        verbose_name_plural = 'teachers'
-        ordering = ['first_name', 'last_name']
+        verbose_name = "teacher"
+        verbose_name_plural = "teachers"
 
 
-class Student(User):
+class Student(models.Model):
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     age = models.IntegerField()
+    raiting = models.DecimalField(max_digits=4, decimal_places=2)
 
     def __str__(self):
-        return f'{self.pk} - {self.first_name} {self.last_name}'
+        return f"{self.pk} - {self.user}"
 
     class Meta:
-        verbose_name = 'student'
-        verbose_name_plural = 'students'
-        ordering = ['first_name', 'last_name']
+        verbose_name = "student"
+        verbose_name_plural = "students"
