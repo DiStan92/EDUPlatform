@@ -32,7 +32,7 @@ class Article(models.Model):
     title = models.CharField(max_length=150)
     topic = models.ForeignKey(Topic, on_delete=models.SET_NULL, null=True)
     teacher = models.ForeignKey(Teacher, on_delete=models.SET_NULL, null=True)
-    content = models.TextField()
+    content = models.FileField()
 
     def __str__(self):
         return f"{self.title}"
