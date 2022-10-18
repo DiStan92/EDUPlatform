@@ -3,6 +3,8 @@ from users.models import Teacher
 
 from EDUPlatform.mixins import DateTimeMixin
 
+__all__ = {"Course", "Topic", "Article", "Test", "Question", "Answer"}
+
 
 class Course(models.Model, DateTimeMixin):
     course_name = models.CharField(max_length=50)

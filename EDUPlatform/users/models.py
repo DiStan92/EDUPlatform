@@ -4,7 +4,10 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 
 from EDUPlatform.mixins import DateTimeMixin
+
 from .managers import CustomUserManager
+
+__all__ = {"User", "Teacher", "Student"}
 
 
 class User(AbstractBaseUser, PermissionsMixin, DateTimeMixin):
