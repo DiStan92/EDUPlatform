@@ -18,7 +18,7 @@ class Course(models.Model):
 class Topic(models.Model):
     topic_name = models.CharField(max_length=100)
     course = models.ForeignKey(Course, on_delete=models.SET_NULL, null=True)
-    image = models.ImageField()
+    image = models.ImageField(null=True, blank=True)
 
     def __str__(self):
         return f"{self.pk} - {self.topic_name}"
@@ -32,7 +32,7 @@ class Article(models.Model):
     title = models.CharField(max_length=150)
     topic = models.ForeignKey(Topic, on_delete=models.SET_NULL, null=True)
     teacher = models.ForeignKey(Teacher, on_delete=models.SET_NULL, null=True)
-    content = models.FileField()
+    content = models.FileField(null=True, blank=True)
 
     def __str__(self):
         return f"{self.pk} - {self.title}"
