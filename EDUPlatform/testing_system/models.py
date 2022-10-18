@@ -4,11 +4,11 @@ from users.models import Teacher
 
 class Course(models.Model):
     course_name = models.CharField(max_length=50)
-    teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE)
+    teacher = models.ForeignKey(Teacher, on_delete=models.SET_NULL, null=True)
     price = models.DecimalField(max_digits=10, decimal_places=2)
 
     def __str__(self):
-        return f"{self.course_name}, {self.teacher}, {self.price}"
+        return f"{self.pk} - {self.course_name} - {self.price}"
 
     class Meta:
         verbose_name = "course"
@@ -21,7 +21,7 @@ class Topic(models.Model):
     image = models.ImageField()
 
     def __str__(self):
-        return f"{self.topic_name}, {self.course}"
+        return f"{self.pk} - {self.topic_name}"
 
     class Meta:
         verbose_name = "topic"
@@ -35,7 +35,7 @@ class Article(models.Model):
     content = models.FileField()
 
     def __str__(self):
-        return f"{self.title}"
+        return f"{self.pk} - {self.title}"
 
     class Meta:
         verbose_name = "article"
@@ -50,7 +50,7 @@ class Test(models.Model):
     is_open = models.BooleanField(default=False)
 
     def __str__(self):
-        return f"{self.title}, {self.teacher}"
+        return f"{self.pk} - {self.title}"
 
     class Meta:
         verbose_name = "test"
@@ -58,11 +58,12 @@ class Test(models.Model):
 
 
 class Question(models.Model):
-    topic = models.ForeignKey(Topic, on_delete=models.SET_NULL, null=True)
-    text = models.TextField(blank=True, null=True)
+    test = models.ForeignKey(Test, on_delete=models.SET_NULL, null=True)
+    text = models.TextField()
+    is_important = models.BooleanField(default=False)
 
     def __str__(self):
-        return f"{self.topic}, {self.text}"
+        return f"{self.pk} - {self.text}"
 
     class Meta:
         verbose_name = "question"
@@ -70,12 +71,12 @@ class Question(models.Model):
 
 
 class Answer(models.Model):
-    question = models.ForeignKey(Question, on_delete=models.SET_NULL, null=True)
-    text = models.TextField(blank=True, null=True)
+    question = models.ForeignKey(Question, on_delete=models.CASCADE)
+    text = models.TextField()
     is_correct = models.BooleanField(default=False)
 
     def __str__(self):
-        return f"{self.text}, {self.is_correct}"
+        return f"{self.text} - {self.is_correct}"
 
     class Meta:
         verbose_name = "answer"
