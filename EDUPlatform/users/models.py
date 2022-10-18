@@ -42,7 +42,6 @@ class Teacher(models.Model):
     def __str__(self):
         return f"{self.pk} - {self.user}"
 
-
     class Meta:
         verbose_name = "teacher"
         verbose_name_plural = "teachers"
