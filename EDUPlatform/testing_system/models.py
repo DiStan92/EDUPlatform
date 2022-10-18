@@ -1,8 +1,10 @@
 from django.db import models
 from users.models import Teacher
 
+from EDUPlatform.mixins import DateTimeMixin
 
-class Course(models.Model):
+
+class Course(models.Model, DateTimeMixin):
     course_name = models.CharField(max_length=50)
     teacher = models.ForeignKey(Teacher, on_delete=models.SET_NULL, null=True)
     price = models.DecimalField(max_digits=10, decimal_places=2)
@@ -15,7 +17,7 @@ class Course(models.Model):
         verbose_name_plural = "courses"
 
 
-class Topic(models.Model):
+class Topic(models.Model, DateTimeMixin):
     topic_name = models.CharField(max_length=100)
     course = models.ForeignKey(Course, on_delete=models.SET_NULL, null=True)
     image = models.ImageField(null=True, blank=True)
@@ -28,7 +30,7 @@ class Topic(models.Model):
         verbose_name_plural = "topics"
 
 
-class Article(models.Model):
+class Article(models.Model, DateTimeMixin):
     title = models.CharField(max_length=150)
     topic = models.ForeignKey(Topic, on_delete=models.SET_NULL, null=True)
     teacher = models.ForeignKey(Teacher, on_delete=models.SET_NULL, null=True)
@@ -42,7 +44,7 @@ class Article(models.Model):
         verbose_name_plural = "articles"
 
 
-class Test(models.Model):
+class Test(models.Model, DateTimeMixin):
     title = models.CharField(max_length=150)
     topic = models.ForeignKey(Topic, on_delete=models.SET_NULL, null=True)
     teacher = models.ForeignKey(Teacher, on_delete=models.SET_NULL, null=True)
@@ -57,7 +59,7 @@ class Test(models.Model):
         verbose_name_plural = "tests"
 
 
-class Question(models.Model):
+class Question(models.Model, DateTimeMixin):
     test = models.ForeignKey(Test, on_delete=models.SET_NULL, null=True)
     text = models.TextField()
     is_important = models.BooleanField(default=False)
@@ -70,7 +72,7 @@ class Question(models.Model):
         verbose_name_plural = "questions"
 
 
-class Answer(models.Model):
+class Answer(models.Model, DateTimeMixin):
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
     text = models.TextField()
     is_correct = models.BooleanField(default=False)
