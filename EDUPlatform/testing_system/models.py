@@ -1,5 +1,5 @@
 from django.db import models
-from users.models import Teacher
+from users.models import Student, Teacher
 
 from EDUPlatform.mixins import DateTimeMixin
 
@@ -85,3 +85,16 @@ class Answer(models.Model, DateTimeMixin):
     class Meta:
         verbose_name = "answer"
         verbose_name_plural = "answers"
+
+
+class Attempt(models.Model, DateTimeMixin):
+    test = models.ForeignKey(Test, on_delete=models.CASCADE)
+    student = models.ForeignKey(Student, on_delete=models.CASCADE)
+    score = models.PositiveSmallIntegerField(default=0)
+
+    def __str__(self):
+        return f"Test id - {self.test}, student id - {self.student}, score - {self.score}"
+
+    class Meta:
+        verbose_name = "test_attempt"
+        verbose_name_plural = "test_attempts"
