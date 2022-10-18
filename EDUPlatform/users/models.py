@@ -35,28 +35,30 @@ class User(AbstractBaseUser, PermissionsMixin):
         verbose_name_plural = _("users")
 
 
-class Teacher(User):
-    experiense = models.IntegerField()
+class Teacher(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    experience = models.IntegerField()
 
     def __str__(self):
-        return f"{self.pk} - {self.first_name} {self.last_name}"
+        return f"{self.pk} - {self.user}"
+
 
     class Meta:
         verbose_name = "teacher"
         verbose_name_plural = "teachers"
-        ordering = ["first_name", "last_name"]
 
 
-class Student(User):
+class Student(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     age = models.IntegerField()
+    rating = models.DecimalField(max_digits=4, decimal_places=2)
 
     def __str__(self):
-        return f"{self.pk} - {self.first_name} {self.last_name}"
+        return f"{self.pk} - {self.user}"
 
     class Meta:
         verbose_name = "student"
         verbose_name_plural = "students"
-        ordering = ["first_name", "last_name"]
 
 
 class Course(models.Model):
@@ -97,3 +99,4 @@ class Article(models.Model):
     class Meta:
         verbose_name = "article"
         verbose_name_plural = "article"
+        
