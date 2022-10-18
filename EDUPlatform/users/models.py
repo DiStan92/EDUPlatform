@@ -3,10 +3,14 @@ from django.contrib.auth.models import PermissionsMixin
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
+from EDUPlatform.mixins import DateTimeMixin
+
 from .managers import CustomUserManager
 
+__all__ = {"User", "Teacher", "Student"}
 
-class User(AbstractBaseUser, PermissionsMixin):
+
+class User(AbstractBaseUser, PermissionsMixin, DateTimeMixin):
 
     first_name = models.CharField(_("first name"), max_length=150, blank=True)
     last_name = models.CharField(_("last name"), max_length=150, blank=True)
@@ -35,9 +39,9 @@ class User(AbstractBaseUser, PermissionsMixin):
         verbose_name_plural = _("users")
 
 
-class Teacher(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
-    experience = models.IntegerField()
+class Teacher(models.Model, DateTimeMixin):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    experience = models.IntegerField(verbose_name="Teacher's XP")
 
     def __str__(self):
         return f"{self.pk} - {self.user}"
@@ -47,8 +51,8 @@ class Teacher(models.Model):
         verbose_name_plural = "teachers"
 
 
-class Student(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+class Student(models.Model, DateTimeMixin):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     age = models.IntegerField()
     rating = models.DecimalField(max_digits=4, decimal_places=2)
 
@@ -58,44 +62,3 @@ class Student(models.Model):
     class Meta:
         verbose_name = "student"
         verbose_name_plural = "students"
-
-
-class Course(models.Model):
-    course_name = models.CharField(max_length=50)
-    teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE)
-    price = models.DecimalField(max_digits=10, decimal_places=2)
-
-    def __str__(self):
-        return f"{self.course_name}, {self.teacher}, {self.price}"
-
-    class Meta:
-        verbose_name = "course"
-        verbose_name_plural = "course"
-
-
-class Topic(models.Model):
-    topic_name = models.CharField(max_length=100)
-    course = models.ForeignKey(Course, on_delete=models.CASCADE)
-    image = models.TextField()
-
-    def __str__(self):
-        return f"{self.topic_name}, {self.course}"
-
-    class Meta:
-        verbose_name = "topic"
-        verbose_name_plural = "topic"
-
-
-class Article(models.Model):
-    title = models.CharField(max_length=150)
-    topic = models.ForeignKey(Topic, on_delete=models.SET_NULL, null=True)
-    teacher = models.ForeignKey(Teacher, on_delete=models.SET_NULL, null=True)
-    content = models.TextField()
-
-    def __str__(self):
-        return f"{self.title}"
-
-    class Meta:
-        verbose_name = "article"
-        verbose_name_plural = "article"
-        
