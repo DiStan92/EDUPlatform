@@ -6,7 +6,8 @@ from .models import Student, Teacher, User
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ["first_name", "last_name", "email"]
+        fields = "__all__"
+        extra_kwargs = {"password": {"write_only": True}}
 
 
 class TeacherSerializer(serializers.ModelSerializer):
@@ -32,5 +33,5 @@ class StudentTeacherSerializer(serializers.ModelSerializer):
             case False:
                 serializer = TeacherSerializer(object)
             case _:
-                raise Exception('nothing true serializer')
+                raise Exception('nothing to serialize')
         return serializer.data
