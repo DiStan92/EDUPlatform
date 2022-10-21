@@ -4,10 +4,10 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 
 from EDUPlatform.mixins import DateTimeMixin
-
 from .managers import CustomUserManager
 
-__all__ = {"User", "Teacher", "Student"}
+
+__all__ = {"User", "Teacher", "Student", "Group"}
 
 
 class User(AbstractBaseUser, PermissionsMixin, DateTimeMixin):
@@ -62,3 +62,17 @@ class Student(models.Model, DateTimeMixin):
     class Meta:
         verbose_name = "student"
         verbose_name_plural = "students"
+
+
+class Group(models.Model, DateTimeMixin):
+    group_name = models.CharField(max_length=50)
+    course = models.ForeignKey("testing_system.Course", on_delete=models.SET_NULL, null=True)
+    teacher = models.ForeignKey(Teacher, on_delete=models.SET_NULL, null=True)
+    student = models.ManyToManyField(Student, null=True, blank=True)
+
+    def __str__(self):
+        return f"{self.pk} - {self.group_name}"
+
+    class Meta:
+        verbose_name = "group"
+        verbose_name_plural = "groups"
