@@ -4,8 +4,8 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 
 from EDUPlatform.mixins import DateTimeMixin
-from .managers import CustomUserManager
 
+from .managers import CustomUserManager
 
 __all__ = {"User", "Teacher", "Student", "Group"}
 

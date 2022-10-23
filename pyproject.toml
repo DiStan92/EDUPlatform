@@ -1,20 +1,22 @@
 [tool.poetry]
 name = "eduplatform"
 version = "0.1.0"
-description = ""
+description = "Eduplatform project cool"
 authors = ["Nikita <nikitapt63@gmail.com>", "Dima <dimastantsel@gmail.com>", "Kate <katherinameliuk1@gmail.com>", "Vlad <vladfrolkov411@gmail.com>", "Aliaksandr <aliaksandrmatusevich@gmail.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.10"
-Django = "4.1.1"
+Django = "4.1.2"
 python-dotenv = "^0.21.0"
+djangorestframework = "^3.14.0"
+
 
 [tool.poetry.group.dev.dependencies]
-isort = "5.10.1"
-flake8 = "5.0.4"
-black = "22.10.0"
-pyupgrade = "^3.0.0"
+black = "^22.10.0"
+isort = "^5.10.1"
+flake8 = "^5.0.4"
+pyupgrade = "^3.1.0"
 
 [build-system]
 requires = ["poetry-core"]
