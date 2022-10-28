@@ -32,8 +32,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name="topic",
             name="image",
-            field=models.ManyToManyField(
-                blank=True, null=True, to="testing_system.image"
-            ),
+            field=models.ManyToManyField(blank=True, null=True, to="testing_system.image"),
         ),
     ]
