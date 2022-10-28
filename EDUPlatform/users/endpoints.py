@@ -1,11 +1,16 @@
-from .models import User, Teacher, Student, Group
-from rest_framework.viewsets import ModelViewSet
-from rest_framework.generics import ListAPIView
 from rest_framework import permissions
+from rest_framework.generics import ListAPIView
+from rest_framework.viewsets import ModelViewSet
 
-from .serializers import \
-    UserSerializer, TeacherSerializer, StudentSerializer, \
-    GroupSerializer, GroupStudentSerializer, StudentTeacherSerializer
+from .models import Group, Student, Teacher, User
+from .serializers import (
+    GroupSerializer,
+    GroupStudentSerializer,
+    StudentSerializer,
+    StudentTeacherSerializer,
+    TeacherSerializer,
+    UserSerializer,
+)
 
 
 class UserViewSet(ModelViewSet):
@@ -35,4 +40,3 @@ class GroupStudentViewAPI(ListAPIView):
         group = self.kwargs["id"]
         print(self.request)
         return Student.objects.filter(group__in=group)
-

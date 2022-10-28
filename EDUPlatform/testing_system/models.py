@@ -6,6 +6,10 @@ from EDUPlatform.mixins import DateTimeMixin
 __all__ = {"Course", "Topic", "Article", "Test", "Question", "Answer"}
 
 
+class Image(models.Model):
+    image = models.ImageField(null=True, blank=True)
+
+
 class Course(models.Model, DateTimeMixin):
     course_name = models.CharField(max_length=50)
     teacher = models.ForeignKey(Teacher, on_delete=models.SET_NULL, null=True)
@@ -22,7 +26,7 @@ class Course(models.Model, DateTimeMixin):
 class Topic(models.Model, DateTimeMixin):
     topic_name = models.CharField(max_length=100)
     course = models.ForeignKey(Course, on_delete=models.SET_NULL, null=True)
-    image = models.ImageField(null=True, blank=True)
+    image = models.ManyToManyField(Image, null=True, blank=True)
 
     def __str__(self):
         return f"{self.pk} - {self.topic_name}"
