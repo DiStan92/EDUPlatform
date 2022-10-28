@@ -5,14 +5,14 @@ from .endpoints import (
     AnswerViewSet,
     ArticleViewSet,
     AttemptViewSet,
-    CourseViewSet,
-    QuestionViewSet,
-    TestViewSet,
-    TopicViewSet,
     CourseTopicViewApi,
-    TopicArticleViewApi,
+    CourseViewSet,
+    QuestionAnswerViewApi,
+    QuestionViewSet,
     TestQuestionViewApi,
-    QuestionAnswerViewApi
+    TestViewSet,
+    TopicArticleViewApi,
+    TopicViewSet,
 )
 
 router = DefaultRouter()

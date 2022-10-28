@@ -13,7 +13,6 @@ from .serializers import (
     TopicSerializer,
 )
 
-
 CUSTOM = [permissions.AllowAny]
 ADMINS = [permissions.IsAdminUser]
 
