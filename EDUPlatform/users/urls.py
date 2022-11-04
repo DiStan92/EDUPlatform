@@ -1,7 +1,13 @@
 from django.urls import include, path, re_path
 from rest_framework.routers import DefaultRouter
 
-from .endpoints import GroupStudentViewAPI, GroupViewSet, TeacherViewSet, UserViewSet, StudentViewSet
+from .endpoints import (
+    GroupStudentViewAPI,
+    GroupViewSet,
+    StudentViewSet,
+    TeacherViewSet,
+    UserViewSet,
+)
 
 router = DefaultRouter()
 router.register(r"user", UserViewSet)

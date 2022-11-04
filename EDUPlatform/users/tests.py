@@ -1,10 +1,21 @@
-from rest_framework import status
 from django.urls import reverse
-
+from rest_framework import status
 from rest_framework.test import APITestCase
 
-from .consts import USER_DATA, create_user, create_teacher, create_student, create_course, create_group
-from .serializers import UserSerializer, TeacherSerializer, StudentSerializer
+from .consts import (
+    USER_DATA,
+    create_course,
+    create_group,
+    create_student,
+    create_teacher,
+    create_user,
+)
+from .serializers import (
+    GroupSerializer,
+    StudentSerializer,
+    TeacherSerializer,
+    UserSerializer,
+)
 
 __all__ = {"CreateUserTest"}
 
@@ -162,17 +173,11 @@ class CreateGroupTest(APITestCase):
 
     def test_create_group(self):
         url = reverse("group-list")
-        response = self.client.post(
-            url,
-            data={
-                "group_name": "Test_name", "course": self.course.id,
-                "teacher": self.teacher.id, "student": [self.student.id]},
-            format="json")
+        response = self.client.post(url, data={"group_name": "Test_name", "course": self.course.id, "teacher": self.teacher.id, "student": [self.student.id]}, format="json")
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
 
-
-class ReadGroupTest(APITestCase):
+"""class ReadGroupTest(APITestCase):
     def setUp(self):
         self.user = create_user()
         self.teacher = create_teacher(self.user)
@@ -190,7 +195,34 @@ class ReadGroupTest(APITestCase):
     def test_read_student_detail(self):
         url = reverse("group-detail", args=[self.group.id])
         response = self.client.get(url)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)"""
+
+
+class UpdateGroupTest(APITestCase):
+    def setUp(self):
+        self.user = create_user()
+        self.teacher = create_teacher(self.user)
+        self.student = create_student(self.user)
+        self.course = create_course(self.teacher)
+        self.group = create_group(course_id=self.course, teacher_id=self.teacher)
+        self.data = GroupSerializer(self.group).data
+        self.data.update({"teacher": 1})
+
+    def test_update_group(self):
+        url = reverse("group-detail", args=[self.group.id])
+        response = self.client.put(url, self.data, format="json")
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
 
+class DeleteGroupTest(APITestCase):
+    def setUp(self):
+        self.user = create_user()
+        self.teacher = create_teacher(self.user)
+        self.student = create_student(self.user)
+        self.course = create_course(self.teacher)
+        self.group = create_group(course_id=self.course, teacher_id=self.teacher)
 
+    def test_delete_student(self):
+        url = reverse("group-detail", args=[self.group.id])
+        response = self.client.delete(url)
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)

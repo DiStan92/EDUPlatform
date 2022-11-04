@@ -1,7 +1,12 @@
-from .models import User, Teacher, Student, Group
-from .annotations import UserAnnotation, TeacherAnnotation, StudentAnnotation
 from testing_system.models import Course
 
+from .annotations import (
+    GroupAnnotation,
+    StudentAnnotation,
+    TeacherAnnotation,
+    UserAnnotation,
+)
+from .models import Group, Student, Teacher, User
 
 USER_DATA = {
     "password": "1234",
@@ -12,9 +17,7 @@ USER_DATA = {
 
 
 def create_user() -> UserAnnotation:
-    user = User.objects.create_user(
-        password="1234", first_name="Test_name",
-        last_name="Test_surname", email="test_email@mail.ru")
+    user = User.objects.create_user(password="1234", first_name="Test_name", last_name="Test_surname", email="test_email@mail.ru")
     return user
 
 
@@ -33,6 +36,6 @@ def create_course(teacher_id):
     return course
 
 
-def create_group(course_id, teacher_id):
+def create_group(course_id, teacher_id) -> GroupAnnotation:
     group = Group.objects.create(group_name="Test_name", course=course_id, teacher=teacher_id)
     return group

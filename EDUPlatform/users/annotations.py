@@ -1,5 +1,6 @@
 from dataclasses import dataclass
-from django.forms import EmailField, DecimalField
+
+from django.forms import DecimalField, EmailField
 
 
 @dataclass(frozen=True, slots=True)
@@ -23,4 +24,9 @@ class StudentAnnotation:
     rating: DecimalField
 
 
-
+@dataclass(frozen=True, slots=True)
+class GroupAnnotation:
+    group_name: str
+    course: str
+    teacher: TeacherAnnotation
+    student: StudentAnnotation
