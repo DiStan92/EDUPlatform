@@ -1,8 +1,9 @@
 from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APITestCase
-from users.consts import USER_DATA, create_course, create_teacher, create_user
+from users.consts import USER_DATA, create_teacher, create_user
 
+from .consts import create_course
 from .serializers import CourseSerializer
 
 
@@ -36,7 +37,19 @@ class UpdateCourseTest(APITestCase):
         self.data = CourseSerializer(self.course).data
         self.data.update({"price": 200})
 
-    def test_update_teacher(self):
+    def test_update_course(self):
         url = reverse("course-detail", args=[self.course.id])
         response = self.client.put(url, self.data, format="json")
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+
+class DeleteCourseTest(APITestCase):
+    def setUp(self):
+        self.user = create_user()
+        self.teacher = create_teacher(self.user)
+        self.course = create_course(self.teacher)
+
+    def test_delete_course(self):
+        url = reverse("course-detail", args=[self.course.id])
+        response = self.client.delete(url)
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)

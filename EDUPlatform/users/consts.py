@@ -1,5 +1,3 @@
-from testing_system.models import Course
-
 from .annotations import (
     GroupAnnotation,
     StudentAnnotation,
@@ -29,11 +27,6 @@ def create_teacher(user_id) -> TeacherAnnotation:
 def create_student(user_id) -> StudentAnnotation:
     student = Student.objects.create(age=12, rating=50, user=user_id)
     return student
-
-
-def create_course(teacher_id):
-    course = Course.objects.create(course_name="Test_name", teacher=teacher_id, price=2000)
-    return course
 
 
 def create_group(course_id, teacher_id) -> GroupAnnotation:

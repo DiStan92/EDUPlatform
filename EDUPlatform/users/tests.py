@@ -1,15 +1,9 @@
 from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APITestCase
+from testing_system.consts import create_course
 
-from .consts import (
-    USER_DATA,
-    create_course,
-    create_group,
-    create_student,
-    create_teacher,
-    create_user,
-)
+from .consts import USER_DATA, create_group, create_student, create_teacher, create_user
 from .serializers import (
     GroupSerializer,
     StudentSerializer,
