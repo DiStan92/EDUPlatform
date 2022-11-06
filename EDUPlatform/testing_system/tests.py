@@ -184,7 +184,7 @@ class CreateTestTest(APITestCase):
         url = reverse("test-list", args=[self.test.id])
         response = self.client.post(url, data={"tittle": "123", "topic": self.topic_id,
                                     "teacher": teacher_id, "description": '123', "is_open": False}, format="json")
-        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
 
 class ReadTestTest(APITestCase):
@@ -229,6 +229,74 @@ class DeleteTestTest(APITestCase):
         url = reverse("test-detail", args=[self.test.id])
         response = self.client.delete(url)
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+
+
+class CreateQuestionTest(APITestCase):
+    def setUp(self):
+        self.user = create_user()
+        self.teacher = create_teacher(self.user)
+        self.course = create_course(self.teacher)
+        self.topic = create_topic(self.course)
+        self.test = create_Test(self.topic, self.teacher)
+
+    def test_create_question(self):
+        url = reverse("question-list", args=[self.question.id])
+        response = self.client.post(url, data={"test": test_id, "text": '123', "is_important": False}, format="json")
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+
+class ReadQuestionTest(APITestCase):
+    def setUp(self):
+        self.user = create_user()
+        self.teacher = create_teacher(self.user)
+        self.course = create_course(self.teacher)
+        self.topic = create_topic(self.course)
+        self.test = create_Test(self.topic, self.teacher)
+        self.question = create_Question(test_id=self.test)
+
+    def test_read_question(self):
+        url = reverse("question-list")
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+
+class UpdateQuestionTest(APITestCase):
+    def setUp(self):
+        self.user = create_user()
+        self.teacher = create_teacher(self.user)
+        self.course = create_course(self.teacher)
+        self.topic = create_topic(self.course)
+        self.test = create_Test(self.teacher, self.topic)
+        self.question = create_Question(test_id=self.test)
+        self.data = QuestionSerializer(self.question).data
+        self.data.update({"text": "123123"})
+
+    def test_update_question(self):
+        url = reverse("question-detail", args=[self.question.id])
+        response = self.client.put(url, self.data, format="json")
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+
+class DeleteQuestionTest(APITestCase):
+    def setUp(self):
+        self.user = create_user()
+        self.teacher = create_teacher(self.user)
+        self.course = create_course(self.teacher)
+        self.topic = create_topic(self.course)
+        self.test = create_Test(self.teacher, self.topic)
+        self.question = create_Question(test_id=self.test)
+
+    def test_delete_question(self):
+        url = reverse("question-detail", args=[self.question.id])
+        response = self.client.delete(url)
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+
+
+
+
+
+
+
 
 
 
