@@ -22,5 +22,5 @@ def create_topic(course_id) -> TopicAnnotation:
 
 
 def create_article(topic_id, teacher_id) -> ArticleAnnotation:
-    topic = Article.objects.create(title="Test_name", topic=topic_id, teacher=teacher_id)
-    return topic
+    article = Article.objects.create(title="Test_name", topic=topic_id, teacher=teacher_id)
+    return article
