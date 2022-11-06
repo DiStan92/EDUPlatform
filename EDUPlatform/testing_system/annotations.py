@@ -1,9 +1,7 @@
 from dataclasses import dataclass
 
-from django.forms import DecimalField, EmailField, ImageField
+from django.forms import DecimalField, EmailField, FileField, ImageField
 from users.annotations import TeacherAnnotation
-
-from users.consts import create_course
 
 
 @dataclass(frozen=True, slots=True)
@@ -18,3 +16,11 @@ class TopicAnnotation:
     topic_name: str
     course: CourseAnnotation
     image: ImageField
+
+
+@dataclass(frozen=True, slots=True)
+class ArticleAnnotation:
+    title: str
+    topic: TopicAnnotation
+    teacher: TeacherAnnotation
+    content: FileField
