@@ -22,21 +22,6 @@ class StudentSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
-class StudentTeacherSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Student
-
-    def to_representation(self, object):
-        match isinstance(object, Student):
-            case True:
-                serializer = StudentSerializer(object)
-            case False:
-                serializer = TeacherSerializer(object)
-            case _:
-                raise Exception('nothing to serialize. Chooses are Teacher, Student')
-        return serializer.data
-
-
 class GroupSerializer(serializers.ModelSerializer):
     class Meta:
         model = Group

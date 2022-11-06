@@ -7,7 +7,6 @@ from .serializers import (
     GroupSerializer,
     GroupStudentSerializer,
     StudentSerializer,
-    StudentTeacherSerializer,
     TeacherSerializer,
     UserSerializer,
 )
@@ -16,6 +15,12 @@ from .serializers import (
 class UserViewSet(ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
+    permission_classes = [permissions.AllowAny]
+
+
+class StudentViewSet(ModelViewSet):
+    queryset = Student.objects.all()
+    serializer_class = StudentSerializer
     permission_classes = [permissions.AllowAny]
 
 
