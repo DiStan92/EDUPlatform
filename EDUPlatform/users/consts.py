@@ -39,3 +39,4 @@ def create_course(teacher_id):
 def create_group(course_id, teacher_id) -> GroupAnnotation:
     group = Group.objects.create(group_name="Test_name", course=course_id, teacher=teacher_id)
     return group
+
