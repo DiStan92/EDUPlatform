@@ -3,7 +3,7 @@ from users.models import Student, Teacher
 
 from EDUPlatform.mixins import DateTimeMixin
 
-__all__ = {"Course", "Topic", "Article", "Test", "Question", "Answer", "Image"}
+__all__ = {"Course", "Topic", "Article", "Test", "Question", "Answer", "Image", "Attempt"}
 
 
 class Image(models.Model):
