@@ -177,25 +177,23 @@ class CreateGroupTest(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
 
-"""class ReadGroupTest(APITestCase):
+class ReadGroupTest(APITestCase):
     def setUp(self):
         self.user = create_user()
         self.teacher = create_teacher(self.user)
         self.student = create_student(self.user)
         self.course = create_course(self.teacher)
         self.group = create_group(course_id=self.course, teacher_id=self.teacher)
-        self.group.student_id.set(self.student)
 
-
-    def test_student_list(self):
+    def test_group_list(self):
         url = reverse("group-list")
         response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
-    def test_read_student_detail(self):
+    def test_read_group_detail(self):
         url = reverse("group-detail", args=[self.group.id])
         response = self.client.get(url)
-        self.assertEqual(response.status_code, status.HTTP_200_OK)"""
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
 
 
 class UpdateGroupTest(APITestCase):
