@@ -16,4 +16,4 @@ router.register(r"student", StudentViewSet)
 router.register(r"group", GroupViewSet)
 
 
-urlpatterns = [path("", include(router.urls)), re_path("groups/(?P<id>.+)/students", GroupStudentViewAPI.as_view(), name="groups_students")]
+urlpatterns = [path("", include(router.urls)), re_path("group/(?P<id>.+)/students", GroupStudentViewAPI.as_view(), name="groups_students")]

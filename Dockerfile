@@ -1,16 +1,15 @@
 FROM python:3.10
 
 ENV PYTHONUNBUFFERED 1
+ENV PYTHONDONTWRITEBYTECODE 1
 
 WORKDIR /EDUPlatform
-COPY poetry.lock pyproject.tml /EDUPlatform/
+COPY poetry.lock pyproject.toml /EDUPlatform/
 RUN pip install -U pip && \
-    pip install poetry && \
-    poetry config virtualenvs.create false && \
-    poetry install
+   pip install poetry && \
+   poetry config virtualenvs.create false && \
+   poetry install
 COPY . ./
-COPY ../env ./.env
+COPY ../.env ./.env
 EXPOSE 8000
-
-
- docker run --name db -p 5432:5432 --env-file ./.env -d postgres:14
+ENTRYPOINT ["bash", "-c", "/EDUPlatform/entrypoint.sh"]
